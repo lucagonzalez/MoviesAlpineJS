@@ -11,13 +11,9 @@ function moviesDb() {
     pageNum: 1,
     key: "067be2305fe7df53b3509fb4181121f1",
     getMovies() {
-      if (window.location.href.indexOf('github') > 0) {
-        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${this.key}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${this.pageNum}`)
-          .then(response => response.json())
-          .then(data => this.movies = data.results)
-      } else {
-        console.log("NOPE")
-      }
+      fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${this.key}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${this.pageNum}`)
+        .then(response => response.json())
+        .then(data => this.movies = data.results)
     },
     lessPage() {
       if (this.pageNum != 1) {

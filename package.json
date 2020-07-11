@@ -7,11 +7,5 @@
     "test": "console.log(\"HAO\")"
   },
   "author": "Luca Gonzalez",
-  "license": "ISC",
-  "dependencies": {
-    "tailwindcss": "^1.4.6"
-  },
-  "devDependencies": {
-    "http-server": "^0.12.3"
-  }
+  "license": "ISC"
 }
