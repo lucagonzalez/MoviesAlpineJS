@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.3.5/dist/alpine.min.js" defer></script>
+    <link rel="stylesheet" href="/output.css">
+    <title> Alpine JS Movies </title>
+</head>
+
+<body class="static">
+    <nav class="fixed top-0 w-full flex flex-row-reverse  bg-gray-500 items-center justify-center h-12 z-50">
+        <span class="text-white text-2xl">AlpineJS Movies Testing</span>
+    </nav>
+    <main class="static mt-20" x-data="moviesDb()" x-init="getMovies()" id=main>
+        <section class="flex flex-col justify-center items-center px-12 md:flex-row md:flex-wrap lg:px-24">
+            <template x-for="movie in movies" :key="movie.id">
+                <div class="my-8 md:w-1/3 md:mx-12  max-w-sm">
+                    <div class="bg-gray-300 px-12 py-4 rounded-lg flex flex-col items-center justify-center max-w-sm cursor-pointer hover:bg-blue-500 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+                        x-on:click="openModal(movie.id)">
+                        <span x-text="movie.title" class="text-center"></span>
+                        <img x-bind:src="getImgSrc(movie.poster_path)" class="rounded-md my-5">
+                    </div>
+                    <template x-if="isOpen === movie.id">
+                        <div style="background-color: rgba(0, 0, 0, .7)"
+                        class="mx-auto fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto z-50"
+                        x-transition:enter="transition ease-in duration-500"
+                        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-out duration-500" x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0" x-on:click.away = "isOpen = false">
+                        <div class="container mx-auto rounded p-4 mt-2 overflow-hidden max-w-xl">
+                            <div class="bg-white rounded px-8 py-8">
+                                <h1 class="font-bold text-2xl mb-5 text-center" x-text="movie.title"></h1>
+                                <img x-bind:src="getImgSrc(movie.backdrop_path)"
+                                    class="rounded-md my-5 hidden md:block w-full">
+                                <div class="modal-body">
+                                    <div class="flex items-center justify-between my-5 font-semibold">
+                                        <div class="">
+                                            <span x-text="(movie.vote_average) * 10"></span>% User Score
+                                        </div>
+                                        <div class="">
+                                            Year: <span x-text="(movie.release_date).substring(0, 4)"></span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-5 text-justify">
+                                        <span x-text="movie.overview"></span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 flex flex-row-reverse">
+                                    <button class="bg-blue-700 text-white px-4 py-3 mt-4 text-sm rounded"
+                                        @click="isOpen = false" x-ref="modalCloseButton">
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </template>
+                </div>
+            </template>
+        </section>
+        <button class="fixed top-0 left-0 h-full bg-opacity-25 flex items-center justify-center bg-black text-white text-3xl w-8 hover:bg-opacity-75 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105" x-on:click="lessPage()">&lt;</button>
+        <button class="fixed top-0 right-0 h-full bg-opacity-25 flex items-center justify-center bg-black text-white text-3xl w-8 hover:bg-opacity-75 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105" x-on:click="morePage()">&gt;</button>
+    </main>
+</body>
+<script src="movies.js"></script>
+</html>
